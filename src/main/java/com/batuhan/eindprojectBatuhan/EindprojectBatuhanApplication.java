@@ -9,6 +9,6 @@ public class EindprojectBatuhanApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EindprojectBatuhanApplication.class, args);
 	}
-	//test
+	//testje
 
 }
