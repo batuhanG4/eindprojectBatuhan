@@ -1,4 +1,8 @@
 package com.batuhan.eindprojectBatuhan.repository;
 
-public class UserRepository {
+import com.batuhan.eindprojectBatuhan.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
 }
