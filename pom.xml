@@ -19,6 +19,8 @@
 
 	<properties>
 		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -46,49 +48,26 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-		<!-- Thymeleaf extras voor Spring Security (voor Thymeleaf-integratie met Spring Security) -->
-		<dependency>
-			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
-		</dependency>
-
-		<!-- H2 Database: ingebouwde, in-memory database voor test- en ontwikkelomgevingen -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- Spring Boot Starter Test: voor testen met Spring Boot (JUnit, MockMvc, etc.) -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- Spring Security Test: voor het testen van beveiliging (indien nodig) -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- Hibernate Validator: implementatie van Jakarta Bean Validation API -->
+		<!-- Hibernate Validator: voor validatie van input via Jakarta Bean Validation API -->
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.2.0.Final</version>
 		</dependency>
 
-		<!-- Jakarta Validation API: voor bean-validatie annotaties zoals @NotEmpty en @Email -->
+		<!-- MySQL Driver: voor de verbinding met een MySQL database -->
 		<dependency>
-			<groupId>jakarta.validation</groupId>
-			<artifactId>jakarta.validation-api</artifactId>
-			<version>3.0.0</version>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Jakarta Expression Language (EL): nodig voor Hibernate Validator (bij validaties) -->
-
+		<!-- Spring Boot Starter Test: voor testen van de applicatie (JUnit, MockMvc, etc.) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

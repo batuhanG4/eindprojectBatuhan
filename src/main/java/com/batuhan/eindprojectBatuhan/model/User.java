@@ -1,42 +1,45 @@
 package com.batuhan.eindprojectBatuhan.model;
 
-import jakarta.persistence.*;
+import ch.qos.logback.core.util.StringUtil;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(unique = true)
-    @Email(message = "Email should be valid")
+    @Size(max = 50)
+    private String username;
+
+
     private String email;
-
-    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
-    private String role; // Bijvoorbeeld: "STUDENT" of "ADMIN"
-
-    // Constructors
     public User() {
+
     }
 
-    public User(String email, String password, String role) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
-    // Getters and Setters
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -53,13 +56,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }

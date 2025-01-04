@@ -3,7 +3,7 @@ package com.batuhan.eindprojectBatuhan.service;
 import com.batuhan.eindprojectBatuhan.model.User;
 import com.batuhan.eindprojectBatuhan.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,18 +13,22 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-
-    // Save user in the database
-    public void saveUser(User user) {
+    public void registerUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists.");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("STUDENT"); // Default role for users
         userRepository.save(user);
     }
 
-    // Find user by email
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public void loginUser(String email, String rawPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found."));
+
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new RuntimeException("Invalid credentials.");
+        }
     }
 }

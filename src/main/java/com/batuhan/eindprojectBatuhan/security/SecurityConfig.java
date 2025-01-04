@@ -2,8 +2,6 @@ package com.batuhan.eindprojectBatuhan.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,42 +12,27 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Zorg ervoor dat BCryptPasswordEncoder beschikbaar is als bean
-    }
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-        return authenticationManagerBuilder.build();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/register", "/login", "/h2-console/**").permitAll() // Openbare pagina's incl. H2-console
-                        .anyRequest().authenticated() // Beveilig alle andere pagina's
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/register", "/login", "/css/**", "/js/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // URL voor loginpagina
-                        .defaultSuccessUrl("/", true) // URL na succesvolle login
-                        .permitAll() // Loginpagina is toegankelijk voor iedereen
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
-                        .permitAll() // Logoutpagina is toegankelijk voor iedereen
+                        .logoutSuccessUrl("/login")
                 )
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**") // Schakel CSRF uit voor H2-console
-                )
-                .headers(headers -> headers
-                        .frameOptions(frame -> frame.disable()) // Zorg ervoor dat frame-options correct zijn ingesteld
-                );
+                .csrf(csrf -> csrf.disable()); // CSRF uitschakelen, alleen als je dat nodig vindt
 
         return http.build();
     }
-
-    // Define BCryptPasswordEncoder bean here
-
 }
