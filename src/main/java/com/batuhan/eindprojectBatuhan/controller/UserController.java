@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 
 @Controller
 public class UserController {
@@ -39,17 +42,17 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginUser(@ModelAttribute User user, Model model) {
-        try {
-            userService.loginUser(user.getEmail(), user.getPassword());
-            return "redirect:/home";
-        } catch (RuntimeException e) {
-            model.addAttribute("error", "Invalid email or password.");
-            return "login";
-        }
+        // Deze methode kan volledig worden verwijderd.
+        return "redirect:/home"; // Wordt nu door Spring Security geregeld.
     }
 
     @GetMapping("/home")
-    public String homePage() {
+    public String homePage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // Geeft de ingelogde gebruikersnaam (e-mail in dit geval).
+        model.addAttribute("username", username);
         return "home";
     }
+
+
 }

@@ -24,11 +24,7 @@ public class UserService {
     }
 
     public void loginUser(String email, String rawPassword) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found."));
-
-        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-            throw new RuntimeException("Invalid credentials.");
-        }
+        // Niet meer nodig; authenticatie wordt door Spring Security afgehandeld.
     }
+
 }
