@@ -5,13 +5,13 @@
   <title>Home</title>
 </head>
 <body>
-<h1>Welcome, <span th:text="${username}"></span>!</h1>
+<h1>Welkom, <span th:text="${username}"></span>!</h1>
 <a href="/logout">Logout</a>
 
 <nav>
   <ul>
     <li><a href="/catalog">Catalogus</a></li>
-    <li><a href="/cart">Winkelmandje</a></li>
+    <li><a href="/cart?userId=1">Winkelmandje</a></li>
     <li><a href="/logout">Uitloggen</a></li>
   </ul>
 </nav>
@@ -20,7 +20,7 @@
   <p>Kies een optie uit het menu om verder te gaan:</p>
   <ul>
     <li><a href="/catalog">Bekijk alle producten in de catalogus</a></li>
-    <li><a href="/cart">Bekijk jouw winkelmandje</a></li>
+    <li><a href="/cart?userId=1">Bekijk jouw winkelmandje</a></li>
     <li><a href="/logout">Uitloggen</a></li>
   </ul>
 </div>

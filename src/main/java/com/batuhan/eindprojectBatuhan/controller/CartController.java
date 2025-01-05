@@ -1,14 +1,11 @@
 package com.batuhan.eindprojectBatuhan.controller;
 
 import com.batuhan.eindprojectBatuhan.model.Cart;
-import com.batuhan.eindprojectBatuhan.model.Product;
 import com.batuhan.eindprojectBatuhan.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/cart")
@@ -18,23 +15,21 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping
-    public String viewCart(Model model) {
-        Long userId = 1L; // Voor nu een hardcoded userId
-        model.addAttribute("cart", cartService.getCartByUser(userId));
-        return "cart";
+    public String viewCart(@RequestParam Long userId, Model model) {
+        Cart cart = cartService.getCartByUser(userId);
+        model.addAttribute("cart", cart);
+        return "cart"; // Verwijst naar cart.html
     }
 
-    @GetMapping("/add/{productId}")
-    public String addToCart(@PathVariable Long productId) {
-        Long userId = 1L; // Voor nu een hardcoded userId
+    @PostMapping("/add")
+    public String addToCart(@RequestParam Long userId, @RequestParam Long productId) {
         cartService.addProductToCart(userId, productId);
-        return "redirect:/cart";
+        return "redirect:/cart?userId=" + userId; // Redirect naar winkelmandje
     }
 
-    @GetMapping("/remove/{productId}")
-    public String removeFromCart(@PathVariable Long productId) {
-        Long userId = 1L; // Voor nu een hardcoded userId
+    @PostMapping("/remove")
+    public String removeFromCart(@RequestParam Long userId, @RequestParam Long productId) {
         cartService.removeProductFromCart(userId, productId);
-        return "redirect:/cart";
+        return "redirect:/cart?userId=" + userId; // Redirect naar winkelmandje
     }
 }

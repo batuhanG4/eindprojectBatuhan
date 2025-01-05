@@ -2,18 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Winkelmand</title>
+    <title>Winkelmandje</title>
 </head>
 <body>
-<h1>Winkelmand</h1>
+<h1>Winkelmandje</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Naam</th>
+        <th>Prijs</th>
+        <th>Aantal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${cart.products}">
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price} + ' €'"></td>
+        <td th:text="${product.quantity}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<p>Totalen:</p>
 <ul>
-    <li th:each="product : ${cart.products}">
-        <span th:text="${product.name}"></span> -
-        <span th:text="${product.price}"></span>
-        <form action="#" method="post">
-            <button type="submit">Verwijderen</button>
-        </form>
-    </li>
+    <li>Items in winkelmandje: <span th:text="${cart.products.size()}"></span></li>
+    <li>Totaalprijs: <span th:text="${cart.total} + ' €'"></span></li>
 </ul>
+
+<a href="/catalog">Verder winkelen</a>
 </body>
 </html>
