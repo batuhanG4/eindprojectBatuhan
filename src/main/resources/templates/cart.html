@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Winkelmand</title>
 </head>
 <body>
-
+<h1>Winkelmand</h1>
+<ul>
+    <li th:each="product : ${cart.products}">
+        <span th:text="${product.name}"></span> -
+        <span th:text="${product.price}"></span>
+        <form action="#" method="post">
+            <button type="submit">Verwijderen</button>
+        </form>
+    </li>
+</ul>
 </body>
 </html>
