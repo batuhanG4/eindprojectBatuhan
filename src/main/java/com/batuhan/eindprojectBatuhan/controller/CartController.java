@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.security.Principal;
+
 @Controller
 public class CartController {
 
@@ -37,4 +39,12 @@ public class CartController {
         cartService.addProductToCart(user, productId);
         return "redirect:/cart"; // Redirect naar de pagina met het winkelmandje
     }
+
+    @GetMapping("/cart/remove/{productId}")
+    public String removeProductFromCart(@PathVariable Long productId, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        cartService.removeProductFromCart(user, productId);
+        return "redirect:/cart";  // Nadat het product is verwijderd, terug naar de winkelmand
+    }
+
 }

@@ -11,7 +11,8 @@
     <ul>
         <li th:each="product : ${cart.products}">
             <span th:text="${product.name}">Productnaam</span> -
-            <span th:text="${product.price}">Prijs</span>
+            <span th:text="${product.price}">Prijs</span> -
+            <a th:href="@{/cart/remove/{productId}(productId=${product.id})}">Verwijderen</a>
         </li>
     </ul>
 </div>
