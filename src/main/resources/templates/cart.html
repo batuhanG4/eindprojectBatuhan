@@ -9,12 +9,17 @@
 
 <div>
     <ul>
-        <li th:each="product : ${cart.products}">
-            <span th:text="${product.name}">Productnaam</span> -
-            <span th:text="${product.price}">Prijs</span> -
-            <a th:href="@{/cart/remove/{productId}(productId=${product.id})}">Verwijderen</a>
+        <li th:each="item : ${cart.items}">
+            <span th:text="${item.product.name}">Productnaam</span> -
+            <span th:text="${item.product.price}">Prijs</span> -
+            <span th:text="${item.quantity}">Hoeveelheid</span>
+            <a th:href="@{/cart/remove/{productId}(productId=${item.product.id})}">Verwijder</a>
         </li>
     </ul>
+</div>
+
+<div>
+    <h3>Totaalprijs: € <span th:text="${totalPrice}">0</span></h3>
 </div>
 
 <div>

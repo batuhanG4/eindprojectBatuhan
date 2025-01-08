@@ -15,13 +15,8 @@ public class Cart {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "cart_products",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CartItem> items = new HashSet<>();  // Gebruik CartItem om producten en hoeveelheden bij te houden
 
     public Long getId() {
         return id;
@@ -39,11 +34,20 @@ public class Cart {
         this.user = user;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    public Set<CartItem> getItems() {
+        return items;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setItems(Set<CartItem> items) {
+        this.items = items;
+    }
+
+    // Bereken de totaalprijs van de producten in het winkelmandje
+    public double getTotalPrice() {
+        double total = 0.0;
+        for (CartItem item : items) {
+            total += item.getTotalPrice();
+        }
+        return total;
     }
 }
