@@ -1,35 +1,40 @@
 package com.batuhan.eindprojectBatuhan.controller;
 
-import com.batuhan.eindprojectBatuhan.model.Cart;
+import com.batuhan.eindprojectBatuhan.model.User;
 import com.batuhan.eindprojectBatuhan.service.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.batuhan.eindprojectBatuhan.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-@RequestMapping("/cart")
 public class CartController {
 
-    @Autowired
-    private CartService cartService;
+    private final CartService cartService;
+    private final UserService userService;
 
-    @GetMapping
-    public String viewCart(@RequestParam Long userId, Model model) {
-        Cart cart = cartService.getCartByUser(userId);
-        model.addAttribute("cart", cart);
-        return "cart"; // Verwijst naar cart.html
+    public CartController(CartService cartService, UserService userService) {
+        this.cartService = cartService;
+        this.userService = userService;
     }
 
-    @PostMapping("/add")
-    public String addToCart(@RequestParam Long userId, @RequestParam Long productId) {
-        cartService.addProductToCart(userId, productId);
-        return "redirect:/cart?userId=" + userId; // Redirect naar winkelmandje
+    // Haal het winkelmandje op voor de ingelogde gebruiker via Principal
+    @GetMapping("/cart")
+    public String viewCart(Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username); // Gebruik de gebruikersnaam van de ingelogde gebruiker
+        model.addAttribute("cart", cartService.getCartByCurrentUser(user)); // Haal het winkelmandje op voor de gebruiker
+        return "cart"; // Dit verwijst naar de cart.html
     }
 
-    @PostMapping("/remove")
-    public String removeFromCart(@RequestParam Long userId, @RequestParam Long productId) {
-        cartService.removeProductFromCart(userId, productId);
-        return "redirect:/cart?userId=" + userId; // Redirect naar winkelmandje
+    // Voeg een product toe aan het winkelmandje van de ingelogde gebruiker
+    @GetMapping("/cart/add/{productId}")
+    public String addToCart(@PathVariable Long productId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        cartService.addProductToCart(user, productId);
+        return "redirect:/cart"; // Redirect naar de pagina met het winkelmandje
     }
 }

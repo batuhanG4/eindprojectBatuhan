@@ -2,44 +2,45 @@ package com.batuhan.eindprojectBatuhan.service;
 
 import com.batuhan.eindprojectBatuhan.model.Cart;
 import com.batuhan.eindprojectBatuhan.model.Product;
+import com.batuhan.eindprojectBatuhan.model.User;
 import com.batuhan.eindprojectBatuhan.repository.CartRepository;
 import com.batuhan.eindprojectBatuhan.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CartService {
 
-    @Autowired
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
-
-    public Cart getCartByUser(Long userId) {
-        return cartRepository.findById(userId)
-                .orElseGet(() -> createNewCartForUser(userId));
+    public CartService(CartRepository cartRepository, ProductRepository productRepository) {
+        this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
     }
 
-    private Cart createNewCartForUser(Long userId) {
-        Cart cart = new Cart();
-        cart.setId(userId);
-        return cartRepository.save(cart);
+    public Cart getCartByCurrentUser(User user) {
+        // Probeer het winkelmandje van de gebruiker te vinden
+        Optional<Cart> cartOptional = cartRepository.findByUser(user);
+
+        // Als het winkelmandje niet bestaat, maak een nieuwe aan
+        if (cartOptional.isEmpty()) {
+            Cart cart = new Cart();
+            cart.setUser(user);
+            cartRepository.save(cart); // Sla het nieuwe winkelmandje op in de database
+            return cart;
+        }
+
+        // Als het winkelmandje wel bestaat, retourneer het
+        return cartOptional.get();
     }
 
-    public void addProductToCart(Long userId, Long productId) {
-        Cart cart = getCartByUser(userId);
+    public void addProductToCart(User user, Long productId) {
+        Cart cart = getCartByCurrentUser(user);
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         cart.getProducts().add(product);
-        cartRepository.save(cart);
-    }
-
-    public void removeProductFromCart(Long userId, Long productId) {
-        Cart cart = getCartByUser(userId);
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        cart.getProducts().remove(product);
         cartRepository.save(cart);
     }
 }

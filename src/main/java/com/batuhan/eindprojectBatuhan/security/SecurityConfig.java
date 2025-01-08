@@ -57,6 +57,7 @@ public class SecurityConfig {
                 )
                 .csrf(csrf -> csrf.disable()); // CSRF uitschakelen indien noodzakelijk
 
+
         return http.build();
     }
 }

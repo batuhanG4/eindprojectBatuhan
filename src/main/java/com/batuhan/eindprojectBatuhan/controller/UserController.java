@@ -1,6 +1,8 @@
 package com.batuhan.eindprojectBatuhan.controller;
 
+import com.batuhan.eindprojectBatuhan.model.Cart;
 import com.batuhan.eindprojectBatuhan.model.User;
+import com.batuhan.eindprojectBatuhan.service.CartService;
 import com.batuhan.eindprojectBatuhan.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CartService cartService;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -49,10 +54,21 @@ public class UserController {
     @GetMapping("/home")
     public String homePage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // Geeft de ingelogde gebruikersnaam (e-mail in dit geval).
+        String username = authentication.getName(); // Gebruikersnaam ophalen
+
+        // Haal de gebruiker op via de gebruikersnaam
+        User user = userService.findByUsername(username);
+
         model.addAttribute("username", username);
+
+        // Geef de userId door, maar we gebruiken het niet direct in de URL
+        model.addAttribute("user", user);
+
         return "home";
     }
+
+
+
 
 
 }

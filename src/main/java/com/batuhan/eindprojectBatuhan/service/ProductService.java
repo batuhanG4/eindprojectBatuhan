@@ -1,8 +1,9 @@
 package com.batuhan.eindprojectBatuhan.service;
 
+import com.batuhan.eindprojectBatuhan.model.Category;
 import com.batuhan.eindprojectBatuhan.model.Product;
+import com.batuhan.eindprojectBatuhan.repository.CategoryRepository;
 import com.batuhan.eindprojectBatuhan.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,16 +11,23 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+    }
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    // Voeg de methode toe om producten op te halen op basis van categorie
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
     public List<Product> getProductsByCategory(Long categoryId) {
         return productRepository.findByCategoryId(categoryId);
     }
 }
-
