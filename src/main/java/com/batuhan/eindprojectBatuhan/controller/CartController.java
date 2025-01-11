@@ -33,6 +33,7 @@ public class CartController {
         return "cart";
     }
 
+    //Product word toegevoegd aan een winkelmandje
     @GetMapping("/cart/add/{productId}")
     public String addToCart(@PathVariable Long productId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -41,6 +42,7 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    //product word verwijderd van winkelmandje
     @GetMapping("/cart/remove/{productId}")
     public String removeProductFromCart(@PathVariable Long productId, Principal principal) {
         User user = userService.findByUsername(principal.getName());
@@ -48,6 +50,8 @@ public class CartController {
         return "redirect:/cart";
     }
 
+
+    //Er word geklikt op de bevestigingslink
     @GetMapping("/confirmation")
     public String showConfirmationPage() {
         return "confirmation"; // Return de nieuwe confirmation.html pagina

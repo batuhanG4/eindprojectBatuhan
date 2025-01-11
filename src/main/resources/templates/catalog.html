@@ -12,20 +12,34 @@
 </header>
 
 <div class="container">
-  <form th:action="@{/catalog/category}" method="get">
+  <!-- Filter formulier -->
+  <form th:action="@{/catalog/filter}" method="get">
+    <!-- Filter op categorie -->
     <label for="category">Filter op categorie:</label>
     <select name="categoryId" id="category">
+      <option value="" th:text="'Alle categorieën'" th:selected="${selectedCategoryId == null}"></option>
       <option th:each="category : ${categories}"
               th:value="${category.id}"
               th:text="${category.name}"
               th:selected="${category.id == selectedCategoryId}"></option>
     </select>
+
+    <!-- Sorteer op prijs -->
+    <label for="priceSort">Sorteer op prijs:</label>
+    <select name="priceOrder" id="priceSort">
+      <option value="" th:text="'Geen sortering'" th:selected="${priceOrder == null || priceOrder == ''}"></option>
+      <option value="asc" th:text="'Prijs: Laag naar Hoog'" th:selected="${priceOrder == 'asc'}"></option>
+      <option value="desc" th:text="'Prijs: Hoog naar Laag'" th:selected="${priceOrder == 'desc'}"></option>
+    </select>
+
     <button type="submit">Filter</button>
   </form>
 
+  <!-- Productlijst -->
   <ul>
     <li th:each="product : ${products}">
       <span th:text="${product.name}"></span> -
+      <span th:text="${product.price}"></span> -
       <a th:href="@{/cart/add/{id}(id=${product.id})}">Toevoegen aan winkelmand</a>
     </li>
   </ul>

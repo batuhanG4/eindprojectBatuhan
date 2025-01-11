@@ -52,4 +52,8 @@ public class UserService {
         cart.setUser(user);  // Koppel het winkelmandje aan de gebruiker
         cartRepository.save(cart);  // Sla het winkelmandje op in de database
     }
+
+    public long countUsers() {
+        return userRepository.count();  // Telt het aantal gebruikers in de database
+    }
 }

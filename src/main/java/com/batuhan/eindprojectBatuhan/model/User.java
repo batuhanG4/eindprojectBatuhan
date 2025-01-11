@@ -1,8 +1,6 @@
 package com.batuhan.eindprojectBatuhan.model;
 
-import ch.qos.logback.core.util.StringUtil;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
 @Entity

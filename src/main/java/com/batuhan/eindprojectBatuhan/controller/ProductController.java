@@ -19,6 +19,7 @@ public class ProductController {
         this.productService = productService;
     }
 
+    //catalog word aangetoond samen met de nodige producten en de nodige categorieen
     @GetMapping("/catalog")
     public String viewAllProducts(Model model) {
         List<Product> products = productService.getAllProducts();
@@ -28,6 +29,7 @@ public class ProductController {
         return "catalog";
     }
 
+    //Producten laten tonen per categorie
     @GetMapping("/catalog/category")
     public String viewProductsByCategory(@RequestParam Long categoryId, Model model) {
         List<Product> products = productService.getProductsByCategory(categoryId);
@@ -37,4 +39,25 @@ public class ProductController {
         model.addAttribute("selectedCategoryId", categoryId);
         return "catalog";
     }
+
+    @GetMapping("/catalog/filter")
+    public String filterProducts(
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String priceOrder,
+            Model model) {
+
+        // Ophalen van gefilterde en/of gesorteerde producten
+        List<Product> filteredProducts = productService.getFilteredProducts(categoryId, priceOrder);
+
+        // Voeg de categorieën, geselecteerde categorie en sorteeroptie toe aan het model
+        model.addAttribute("categories", productService.getAllCategories());
+        model.addAttribute("selectedCategoryId", categoryId);
+        model.addAttribute("priceOrder", priceOrder);
+
+        // Voeg de producten toe aan het model
+        model.addAttribute("products", filteredProducts);
+
+        return "catalog";
+    }
+
 }

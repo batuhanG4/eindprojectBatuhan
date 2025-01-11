@@ -30,4 +30,12 @@ public class ProductService {
     public List<Product> getProductsByCategory(Long categoryId) {
         return productRepository.findByCategoryId(categoryId);
     }
+
+    public List<Product> getFilteredProducts(Long categoryId, String priceOrder) {
+        if (categoryId == null && priceOrder == null) {
+            return productRepository.findAll();
+        }
+        return productRepository.findByCategoryAndSort(categoryId, priceOrder);
+    }
+
 }

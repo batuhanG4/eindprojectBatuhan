@@ -44,10 +44,10 @@ public class Cart {
 
     // Bereken de totaalprijs van de producten in het winkelmandje
     public double getTotalPrice() {
-        double total = 0.0;
+        double total = 0.00;
         for (CartItem item : items) {
             total += item.getTotalPrice();
         }
-        return total;
+        return Math.round(total * 100.0) / 100.0; // Afronden op 2 decimalen
     }
 }

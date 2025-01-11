@@ -17,7 +17,7 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private int quantity;  // Hoeveelheid van het product
+    private int quantity;
 
     // Getter en Setter
     public Long getId() {

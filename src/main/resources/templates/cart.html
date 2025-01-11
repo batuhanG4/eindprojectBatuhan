@@ -22,12 +22,18 @@
         </li>
     </ul>
 
-    <h4>Totaalprijs: € <span th:text="${totalPrice}">0</span> per dag.</h4>
+    <h4 th:if="${cart.items.size() > 0}">
+        Totaalprijs: € <span th:text="${totalPrice}">0</span> per dag.
+    </h4>
+    <h4 th:if="${cart.items.size() == 0}">
+        Je winkelmandje is leeg.
+    </h4>
 
     <a href="/catalog">Terug naar de catalogus</a><br>
     <a href="/home">Terug naar home pagina</a><br>
 
-    <a href="/confirmation">Bevestigen en huren</a>
+    <a th:if="${cart.items.size() > 0}" href="/confirmation">Bevestigen en huren</a>
+    <span th:if="${cart.items.size() == 0}" style="color: gray; cursor: not-allowed; text-decoration: none;">Bevestigen en huren</span>
 </div>
 
 </body>
