@@ -47,4 +47,9 @@ public class CartController {
         cartService.removeProductFromCart(user, productId);
         return "redirect:/cart";
     }
+
+    @GetMapping("/confirmation")
+    public String showConfirmationPage() {
+        return "confirmation"; // Return de nieuwe confirmation.html pagina
+    }
 }
