@@ -2,25 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Catalogus</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h2>Catalogus</h2>
-<form th:action="@{/catalog/category}" method="get">
-  <label for="category">Filter op categorie:</label>
-  <select name="categoryId" id="category">
-    <option th:each="category : ${categories}"
-            th:value="${category.id}"
-            th:text="${category.name}"
-            th:selected="${category.id == selectedCategoryId}"></option>
-  </select>
-  <button type="submit">Filter</button>
-</form>
 
-<ul>
-  <li th:each="product : ${products}">
-    <span th:text="${product.name}"></span> -
-    <a th:href="@{/cart/add/{id}(id=${product.id})}">Toevoegen aan winkelmand</a>
-  </li>
-</ul>
+<header>
+  <h1>Huurplatform</h1>
+  <h3>Catalogus</h3>
+</header>
+
+<div class="container">
+  <form th:action="@{/catalog/category}" method="get">
+    <label for="category">Filter op categorie:</label>
+    <select name="categoryId" id="category">
+      <option th:each="category : ${categories}"
+              th:value="${category.id}"
+              th:text="${category.name}"
+              th:selected="${category.id == selectedCategoryId}"></option>
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+
+  <ul>
+    <li th:each="product : ${products}">
+      <span th:text="${product.name}"></span> -
+      <a th:href="@{/cart/add/{id}(id=${product.id})}">Toevoegen aan winkelmand</a>
+    </li>
+  </ul>
+</div>
+
 </body>
 </html>

@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Winkelmandje</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1>Jouw Winkelmandje</h1>
 
-<div>
+<header>
+    <h1>Huurplatform</h1>
+    <h3>Jouw Winkelmandje</h3>
+</header>
+
+<div class="container">
     <ul>
         <li th:each="item : ${cart.items}">
             <span th:text="${item.product.name}">Productnaam</span> -
@@ -16,19 +21,12 @@
             <a th:href="@{/cart/remove/{productId}(productId=${item.product.id})}">Verwijder</a>
         </li>
     </ul>
-</div>
 
-<div>
-    <h3>Totaalprijs: € <span th:text="${totalPrice}">0</span></h3>
-</div>
+    <h4>Totaalprijs: € <span th:text="${totalPrice}">0</span> per dag.</h4>
 
-<div>
     <a href="/catalog">Terug naar de catalogus</a><br>
     <a href="/home">Terug naar home pagina</a><br>
-</div>
 
-<!-- Bevestigen en huren knop -->
-<div>
     <a href="/confirmation">Bevestigen en huren</a>
 </div>
 

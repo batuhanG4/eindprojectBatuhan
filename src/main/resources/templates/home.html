@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Home</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1>Welkom, <span th:text="${username}"></span>!</h1>
-<a href="/logout">Logout</a>
+
+<header>
+  <h1>Huurplatform</h1>
+  <h3>Welkom, <span th:text="${username}"></span>!</h3>
+</header>
 
 <nav>
   <ul>
     <li><a href="/catalog">Catalogus</a></li>
-    <!-- De link naar het winkelmandje, gebaseerd op de username -->
     <li><a th:href="@{/cart}">Winkelmandje</a></li>
     <li><a href="/logout">Uitloggen</a></li>
   </ul>
 </nav>
 
-<div>
+<div class="container">
   <p>Kies een optie uit het menu om verder te gaan:</p>
   <ul>
     <li><a href="/catalog">Bekijk alle producten in de catalogus</a></li>
@@ -25,5 +28,6 @@
     <li><a href="/logout">Uitloggen</a></li>
   </ul>
 </div>
+
 </body>
 </html>

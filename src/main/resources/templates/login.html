@@ -3,22 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1>Login</h1>
-<form action="/login" method="post">
-  <label for="username">Email:</label>
-  <input type="text" id="username" name="username" required><br>
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required><br>
+<header>
+  <h1>Huurplatform</h1>
+  <h3>Login</h3>
+</header>
 
-  <button type="submit">Login</button>
-</form>
+<div class="container">
+  <form action="/login" method="post">
+    <label for="username">Email:</label>
+    <input type="text" id="username" name="username" required><br>
 
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
 
-<!-- Error weergeven als aanwezig -->
-<p style="color: red;" th:if="${error}" th:text="${error}"></p>
-<p>Als je nog geen account hebt, <a href="/register">klik hier om je te registreren</a>.</p>
+    <button type="submit">Inloggen</button>
+  </form>
+
+  <p style="color: red;" th:if="${error}" th:text="${error}"></p>
+  <p>Als je nog geen account hebt, <a href="/register">klik hier om je te registreren</a>.</p>
+</div>
+
 </body>
 </html>
