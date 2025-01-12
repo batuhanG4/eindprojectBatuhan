@@ -128,4 +128,6 @@ Hier is een lijst van nuttige bronnen die tijdens de ontwikkeling van het projec
 2. [Errors over CartRepository](https://chatgpt.com/share/67832c00-1fc8-8001-8a45-e89d9ab603de)
 3. [Login & registratie opbouw & errors](https://chatgpt.com/share/67832c7c-ae40-8001-9ebf-01207810c72d)
 
+## Bijdrage van ChatGPT
+- Voor dit project is ChatGPT gebruikt bij het oplossen van fouten, het vinden van problemen in de code, en het leggen van een basis voor sommige codecomponenten. ChatGPT bood waardevolle ondersteuning door het snel genereren van voorbeelden en uitleg, wat het ontwikkelingsproces aanzienlijk heeft versneld.
 ---
